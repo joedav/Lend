@@ -1,13 +1,13 @@
-package com.joelysondavid.lend.ui.slideshow
+package com.joelysondavid.lend.ui.woing
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class OwingViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "This is owing Fragment"
     }
     val text: LiveData<String> = _text
 }

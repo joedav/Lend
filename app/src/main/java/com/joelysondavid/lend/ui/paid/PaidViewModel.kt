@@ -1,13 +1,13 @@
-package com.joelysondavid.lend.ui.home
+package com.joelysondavid.lend.ui.paid
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class PaidViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is paid Fragment"
     }
     val text: LiveData<String> = _text
 }

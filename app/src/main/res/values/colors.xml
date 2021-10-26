@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red_salsa">#FFF94144</color>
+    <color name="orange_red">#FFF3722C</color>
+    <color name="orange_yellow">#FFF8961E</color>
+    <color name="maize_crayola">#FFF9C74F</color>
+    <color name="pistachio">#FF90BE6D</color>
+    <color name="zomp">#FF43AA8B</color>
+    <color name="queen_blue">#FF577590</color>
+    <color name="dark_blue">#FF1C578C</color>
 </resources>
