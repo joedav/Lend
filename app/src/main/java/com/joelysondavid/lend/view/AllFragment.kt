@@ -1,4 +1,4 @@
-package com.joelysondavid.lend.ui.woing
+package com.joelysondavid.lend.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.joelysondavid.lend.databinding.FragmentOwingBinding
+import com.joelysondavid.lend.databinding.FragmentAllBinding
+import com.joelysondavid.lend.viewmodel.AllViewModel
 
-class OwingFragment : Fragment() {
+class AllFragment : Fragment() {
 
-    private lateinit var owingViewModel: OwingViewModel
-    private var _binding: FragmentOwingBinding? = null
+    private lateinit var allViewModel: AllViewModel
+    private var _binding: FragmentAllBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,14 +25,14 @@ class OwingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        owingViewModel =
-            ViewModelProvider(this).get(OwingViewModel::class.java)
+        allViewModel =
+            ViewModelProvider(this).get(AllViewModel::class.java)
 
-        _binding = FragmentOwingBinding.inflate(inflater, container, false)
+        _binding = FragmentAllBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textOwing
-        owingViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textAll
+        allViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

@@ -10,4 +10,14 @@
     <string name="menu_owing">Devendo</string>
     <string name="menu_paid">Pagos</string>
     <string name="menu_all">Todos</string>
+    <string name="name">Nome</string>
+    <string name="supost_owing_name">Andrew Lavigen Bierviere</string>
+    <string name="owing_date_label">Data do emprestimo</string>
+    <string name="supost_owing_date">05/05/2021</string>
+    <string name="value_money">Total do emprestimo R$</string>
+    <string name="supost_total_value">20,00</string>
+    <string name="title_activity_form">Formulário de empréstimo</string>
+    <string name="payment_value">Valor pago R$</string>
+    <string name="loan">Resta</string>
+    <string name="save">Salvar</string>
 </resources>

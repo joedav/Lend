@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_owing"
-        android:name="com.joelysondavid.lend.ui.woing.OwingFragment"
+        android:name="com.joelysondavid.lend.view.OwingFragment"
         android:label="@string/menu_owing"
         tools:layout="@layout/fragment_owing" />
 
     <fragment
         android:id="@+id/nav_paid"
-        android:name="com.joelysondavid.lend.ui.paid.PaidFragment"
+        android:name="com.joelysondavid.lend.view.PaidFragment"
         android:label="@string/menu_paid"
         tools:layout="@layout/fragment_paid" />
 
     <fragment
         android:id="@+id/nav_all"
-        android:name="com.joelysondavid.lend.ui.all.AllFragment"
+        android:name="com.joelysondavid.lend.view.AllFragment"
         android:label="@string/menu_all"
         tools:layout="@layout/fragment_all" />
 </navigation>

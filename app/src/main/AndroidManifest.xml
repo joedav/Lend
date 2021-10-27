@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lend">
         <activity
-            android:name=".LendFormActivity"
+            android:name=".view.LendFormActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Lend.NoActionBar">

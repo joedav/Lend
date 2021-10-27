@@ -1,4 +1,4 @@
-package com.joelysondavid.lend.ui.paid
+package com.joelysondavid.lend.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.joelysondavid.lend.databinding.FragmentPaidBinding
+import com.joelysondavid.lend.databinding.FragmentOwingBinding
+import com.joelysondavid.lend.viewmodel.OwingViewModel
 
-class PaidFragment : Fragment() {
+class OwingFragment : Fragment() {
 
-    private lateinit var paidViewModel: PaidViewModel
-    private var _binding: FragmentPaidBinding? = null
+    private lateinit var owingViewModel: OwingViewModel
+    private var _binding: FragmentOwingBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,14 +25,14 @@ class PaidFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        paidViewModel =
-            ViewModelProvider(this).get(PaidViewModel::class.java)
+        owingViewModel =
+            ViewModelProvider(this).get(OwingViewModel::class.java)
 
-        _binding = FragmentPaidBinding.inflate(inflater, container, false)
+        _binding = FragmentOwingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textPaid
-        paidViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textOwing
+        owingViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
