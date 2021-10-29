@@ -1,10 +1,16 @@
 package com.joelysondavid.lend.service.repository
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
+import androidx.core.database.getDoubleOrNull
+import androidx.core.database.getStringOrNull
 import com.joelysondavid.lend.service.DataBaseConstants
 import com.joelysondavid.lend.service.model.LendModel
-import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class LendRepository private constructor(context: Context) {
 
@@ -31,6 +37,10 @@ class LendRepository private constructor(context: Context) {
             values.put(DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME, lend.name)
             values.put(DataBaseConstants.GUEST.COLUMNS.LOAN_DATE, lend.loanDate.toString())
             values.put(DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT, lend.totalValue)
+            values.put(DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT, lend.totalValue)
+            values.put(DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID, lend.amountPaid)
+            values.put(DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT, lend.lastPayment.toString())
+
 
             db.insert(DataBaseConstants.GUEST.TABLE_NAME, null, values)
             true
@@ -59,8 +69,18 @@ class LendRepository private constructor(context: Context) {
         }
     }
 
-    fun delete(id: Int) {
+    fun delete(id: Int): Boolean {
+        return try {
+            val db = mLendDataBaseHelper.writableDatabase
 
+            val whereClause = "${DataBaseConstants.GUEST.COLUMNS.ID} = ?"
+            val whereArgs = arrayOf(id.toString())
+
+            db.delete(DataBaseConstants.GUEST.TABLE_NAME, whereClause, whereArgs)
+            true
+        } catch (ex: Exception) {
+            false
+        }
     }
 
     fun getAll(): List<LendModel> {
@@ -78,7 +98,66 @@ class LendRepository private constructor(context: Context) {
         return list
     }
 
-    fun getById(id: Int): Boolean {
-        return false
+    @SuppressLint("SimpleDateFormat")
+    fun getById(id: Int): LendModel? {
+        var lend: LendModel? = null
+        return try {
+
+            val db = mLendDataBaseHelper.readableDatabase
+
+            val columns = arrayOf(
+                DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME,
+                DataBaseConstants.GUEST.COLUMNS.LOAN_DATE,
+                DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT,
+                DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID,
+                DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT,
+                DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT,
+            )
+
+            val selection = "${DataBaseConstants.GUEST.COLUMNS.ID} = ?"
+            val selectionArgs = arrayOf(id.toString())
+
+            val cursor: Cursor =
+                db.query(
+                    DataBaseConstants.GUEST.TABLE_NAME,
+                    columns,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null
+                )
+
+
+            if (cursor.moveToNext()) {
+                val debtorName =
+                    cursor.getStringOrNull(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME))
+                val loanDate =
+                    cursor.getStringOrNull(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.LOAN_DATE))
+                val loanAmount =
+                    cursor.getDoubleOrNull(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT))
+                val amountPaid =
+                    cursor.getDoubleOrNull(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID))
+                val remainingAmount =
+                    cursor.getDoubleOrNull(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT))
+                val lastPayment =
+                    cursor.getStringOrNull(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT))
+
+                lend = LendModel(
+                    id,
+                    debtorName ?: "",
+                    SimpleDateFormat("dd/MM/yyyy").parse(loanDate ?: "01/02/2003"),
+                    loanAmount ?: 0.0,
+                    amountPaid ?: 0.0,
+                    remainingAmount ?: 0.0,
+                    SimpleDateFormat("dd/MM/yyyy").parse(lastPayment ?: "01/02/2003")
+                )
+            }
+            cursor.close()
+
+            lend
+        } catch (ex: Exception) {
+            lend
+        }
     }
 }

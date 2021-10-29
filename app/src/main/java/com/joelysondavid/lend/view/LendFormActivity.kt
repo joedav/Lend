@@ -36,7 +36,8 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
 
             val dateFormatted = SimpleDateFormat("dd/MM/yyyy").parse(date)
 
-            val lend = LendModel(name, dateFormatted, totalValue.toDouble())
+            val lend =
+                LendModel(name = name, loanDate = dateFormatted, totalValue = totalValue.toDouble())
 
             lendFormViewModel.save(lend)
         }
