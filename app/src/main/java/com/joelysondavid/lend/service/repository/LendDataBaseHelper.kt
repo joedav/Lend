@@ -24,6 +24,6 @@ class LendDataBaseHelper(context: Context) :
                     "(${DataBaseConstants.GUEST.COLUMNS.ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "${DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME} TEXT," +
                     "${DataBaseConstants.GUEST.COLUMNS.LOAN_DATE} DATE," +
-                    "${DataBaseConstants.GUEST.COLUMNS.LOAN_DATE} REAL"
+                    "${DataBaseConstants.GUEST.COLUMNS.LOAN_DATE} REAL);"
     }
 }
