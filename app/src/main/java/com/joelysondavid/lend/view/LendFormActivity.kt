@@ -1,13 +1,17 @@
 package com.joelysondavid.lend.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.joelysondavid.lend.viewmodel.LendFormViewModel
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.joelysondavid.lend.R
 import com.joelysondavid.lend.databinding.ActivityLendFormBinding
 import com.joelysondavid.lend.service.model.LendModel
+import com.joelysondavid.lend.viewmodel.LendFormViewModel
 import kotlinx.android.synthetic.main.activity_lend_form.*
+import com.joelysondavid.lend.utils.*
 import java.text.SimpleDateFormat
 
 class LendFormActivity : AppCompatActivity(), View.OnClickListener {
@@ -19,7 +23,7 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityLendFormBinding.inflate(layoutInflater)
         title = getString(R.string.title_activity_form)
         setContentView(R.layout.activity_lend_form)
-//        lendFormViewModel = ViewModelProvider(this).get(LendFormViewModel::class.java)
+        lendFormViewModel = ViewModelProvider(this).get(LendFormViewModel::class.java)
 
         setListeners()
         observe()
@@ -30,9 +34,9 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
         val id = view.id
 
         if (id == R.id.btn_save) {
-            val name = binding.editOwingName.text.toString()
-            val date = binding.editOwingDate.text.toString()
-            val totalValue = binding.editTotalValue.text.toString()
+            val name = edit_owing_name.text.toString()
+            val date = edit_owing_date.text.toString()
+            val totalValue = edit_total_value.text.toString()
 
             val dateFormatted = SimpleDateFormat("dd/MM/yyyy").parse(date)
 
@@ -45,17 +49,18 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setListeners() {
-
+        btn_save.setOnClickListener(this)
     }
 
     private fun observe() {
-//        lendFormViewModel.saveLoan.observe(this, Observer {
-//            if (it) {
-//                Toast.makeText(applicationContext, "Sucesso!", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(applicationContext, "Falha!", Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        lendFormViewModel.saveLoan.observe(this, Observer {
+            if (it) {
+                Toast.makeText(applicationContext, "Sucesso!", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                Toast.makeText(applicationContext, "Falha!", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun hideEditFields(isEdit: Boolean) {

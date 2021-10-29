@@ -16,7 +16,7 @@ class LendFormViewModel(application: Application) : AndroidViewModel(application
     val saveLoan: LiveData<Boolean> = mSaveLoan
 
     fun save(lend: LendModel) {
-        mLendRepository.save(lend)
+        mSaveLoan.value = mLendRepository.save(lend)
     }
 
 }
