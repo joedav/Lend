@@ -1,7 +1,10 @@
 package com.joelysondavid.lend.service.repository
 
+import android.content.ContentValues
 import android.content.Context
+import com.joelysondavid.lend.service.DataBaseConstants
 import com.joelysondavid.lend.service.model.LendModel
+import java.lang.Exception
 
 class LendRepository private constructor(context: Context) {
 
@@ -20,14 +23,40 @@ class LendRepository private constructor(context: Context) {
         }
     }
 
-    fun save(lend: LendModel) {
-        mLendDataBaseHelper.writableDatabase
+    fun save(lend: LendModel): Boolean {
+        return try {
+            val db = mLendDataBaseHelper.writableDatabase
 
+            val values = ContentValues()
+            values.put(DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME, lend.name)
+            values.put(DataBaseConstants.GUEST.COLUMNS.LOAN_DATE, lend.loanDate.toString())
+            values.put(DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT, lend.totalValue)
 
+            db.insert(DataBaseConstants.GUEST.TABLE_NAME, null, values)
+            true
+        } catch (ex: Exception) {
+            false
+        }
     }
 
-    fun update(lend: LendModel) {
+    fun update(lend: LendModel): Boolean {
+        return try {
+            val db = mLendDataBaseHelper.writableDatabase
 
+            val values = ContentValues()
+            values.put(DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME, lend.name)
+            values.put(DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID, lend.amountPaid)
+            values.put(DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT, lend.remainingAmount)
+            values.put(DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT, lend.lastPayment.toString())
+
+            val whereClause = "${DataBaseConstants.GUEST.COLUMNS.ID} = ?"
+            val whereArgs = arrayOf(lend.id.toString())
+
+            db.update(DataBaseConstants.GUEST.TABLE_NAME, values, whereClause, whereArgs)
+            true
+        } catch (ex: Exception) {
+            false
+        }
     }
 
     fun delete(id: Int) {

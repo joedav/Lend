@@ -3,10 +3,13 @@ package com.joelysondavid.lend.service.model
 import java.util.*
 
 data class LendModel(
+    var id: Int,
     var name: String,
-    var date: Date,
+    var loanDate: Date,
     var totalValue: Double,
-    var paymentMethod: Double = 0.0
+    var lastPayment: Date,
+    var amountPaid: Double = 0.0,
+    var remainingAmount: Double = totalValue,
 ) {
 
 }
