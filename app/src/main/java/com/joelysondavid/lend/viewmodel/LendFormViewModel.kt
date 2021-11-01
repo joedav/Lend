@@ -20,11 +20,23 @@ class LendFormViewModel(application: Application) : AndroidViewModel(application
     val lend: LiveData<LendModel> = mLend
 
     fun save(lend: LendModel) {
-        mSaveLoan.value = mLendRepository.save(lend)
+        if (lend.id == 0)
+            mSaveLoan.value = mLendRepository.save(lend)
+        else {
+            toPay(lend)
+            mSaveLoan.value = mLendRepository.update(lend)
+        }
     }
 
     fun load(id: Int) {
         mLend.value = mLendRepository.getById(id)
     }
 
+    private fun toPay(lend: LendModel): LendModel {
+        if (lend.amountPaying != .0) {
+            lend.remainingAmount = lend.remainingAmount - lend.amountPaying
+        }
+
+        return lend
+    }
 }

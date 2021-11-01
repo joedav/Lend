@@ -36,7 +36,7 @@ class LendRepository private constructor(context: Context) {
             values.put(DataBaseConstants.GUEST.COLUMNS.LOAN_DATE, lend.loanDate)
             values.put(DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT, lend.totalValue)
             values.put(DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT, lend.totalValue)
-            values.put(DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID, lend.amountPaid)
+            values.put(DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID, lend.amountPaying)
             values.put(
                 DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT,
                 lend.lastPayment
@@ -56,7 +56,6 @@ class LendRepository private constructor(context: Context) {
 
             val values = ContentValues()
             values.put(DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME, lend.name)
-            values.put(DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID, lend.amountPaid)
             values.put(DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT, lend.remainingAmount)
             values.put(DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT, lend.lastPayment.toString())
 

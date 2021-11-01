@@ -15,11 +15,14 @@ import com.joelysondavid.lend.service.model.LendModel
 import com.joelysondavid.lend.viewmodel.LendFormViewModel
 import kotlinx.android.synthetic.main.activity_lend_form.*
 import com.joelysondavid.lend.utils.*
+import kotlinx.android.synthetic.main.fragment_paid.*
 import java.text.SimpleDateFormat
 
 class LendFormActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var lendFormViewModel: LendFormViewModel
     private lateinit var binding: ActivityLendFormBinding
+
+    private var mDebtorId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +31,9 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_lend_form)
         lendFormViewModel = ViewModelProvider(this).get(LendFormViewModel::class.java)
 
-        loadData()
         setListeners()
         observe()
-
-
+        loadData()
     }
 
     override fun onClick(view: View) {
@@ -42,12 +43,15 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
             val name = edit_owing_name.text.toString()
             val date = edit_owing_date.text.toString()
             val totalValue = edit_total_value.text.toString()
+            val paying = edit_payment_amount.text.toString()
 
             val lend =
                 LendModel(
+                    id = mDebtorId,
                     name = name,
                     loanDate = date,
-                    totalValue = totalValue.toDouble()
+                    totalValue = totalValue.toDouble(),
+                    amountPaying = paying.toDouble()
                 )
 
             lendFormViewModel.save(lend)
@@ -57,8 +61,7 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
     private fun setListeners() {
         btn_save.setOnClickListener(this)
 
-        val dateMask:DateMask = DateMask()
-        edit_owing_date.addTextChangedListener(dateMask)
+        edit_owing_date.addTextChangedListener(DateMask())
     }
 
     private fun observe() {
@@ -101,8 +104,8 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
     private fun loadData() {
         val bundle = intent.extras
         if (bundle != null) {
-            val id = bundle.getInt(LendConstants.DEBTORID)
-            lendFormViewModel.load(id)
+            mDebtorId = bundle.getInt(LendConstants.DEBTORID)
+            lendFormViewModel.load(mDebtorId)
         }
     }
 

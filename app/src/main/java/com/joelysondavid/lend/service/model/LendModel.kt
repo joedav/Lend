@@ -7,7 +7,7 @@ data class LendModel(
     var name: String,
     var loanDate: String,
     var totalValue: Double,
-    var amountPaid: Double = 0.0,
+    var amountPaying: Double = 0.0,
     var remainingAmount: Double = totalValue,
     var lastPayment: String? = null,
 ) {
