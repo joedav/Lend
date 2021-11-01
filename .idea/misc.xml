@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.29907407407407405" />
         <entry key="app/src/main/res/drawable/ic_menu_all.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/drawable/ic_menu_owing.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/drawable/ic_menu_paid.xml" value="0.19010416666666666" />
@@ -18,6 +19,7 @@
         <entry key="app/src/main/res/layout/fragment_owing.xml" value="0.3234375" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/row_debtor.xml" value="0.33" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.321875" />
         <entry key="app/src/main/res/menu/main.xml" value="0.321875" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_lend_logo.xml" value="0.19010416666666666" />

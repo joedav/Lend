@@ -1,13 +1,20 @@
 package com.joelysondavid.lend.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.joelysondavid.lend.service.model.LendModel
+import com.joelysondavid.lend.service.repository.LendRepository
 
-class OwingViewModel : ViewModel() {
+class OwingViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is owing Fragment"
+    private val mLendRepository = LendRepository.getInstance(application.applicationContext)
+
+    private val mDebtorsList = MutableLiveData<List<LendModel>>()
+    val debtorsList: LiveData<List<LendModel>> = mDebtorsList
+
+    fun load() {
+        mDebtorsList.value = mLendRepository.getOwing()
     }
-    val text: LiveData<String> = _text
 }

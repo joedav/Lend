@@ -5,11 +5,11 @@ import java.util.*
 data class LendModel(
     var id: Int = 0,
     var name: String,
-    var loanDate: Date,
+    var loanDate: String,
     var totalValue: Double,
     var amountPaid: Double = 0.0,
     var remainingAmount: Double = totalValue,
-    var lastPayment: Date? = null,
+    var lastPayment: String? = null,
 ) {
 
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.joelysondavid.lend.R
 import com.joelysondavid.lend.databinding.FragmentOwingBinding
 import com.joelysondavid.lend.view.adapter.DebtorAdapter
 import com.joelysondavid.lend.viewmodel.OwingViewModel
@@ -20,6 +21,7 @@ class OwingFragment : Fragment() {
 
     private lateinit var owingViewModel: OwingViewModel
     private var _binding: FragmentOwingBinding? = null
+    private val mAdapter: DebtorAdapter = DebtorAdapter()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -38,13 +40,17 @@ class OwingFragment : Fragment() {
 
         // Recycler View
         // 1 - Obter a recycler
-        val recycler: RecyclerView = binding.recyclerOwing
+        val recycler: RecyclerView = root.findViewById(R.id.recycler_owing)
 
         // 2 - Definir um Layout
         recycler.layoutManager = LinearLayoutManager(root.context)
 
         // 3 - Definir um adapter
-        recycler.adapter = DebtorAdapter()
+        recycler.adapter = mAdapter
+
+        observer()
+
+        owingViewModel.load()
 
         return root
     }
@@ -52,5 +58,13 @@ class OwingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun observer() {
+        owingViewModel.debtorsList.observe(
+            viewLifecycleOwner,
+            Observer {
+                mAdapter.updateDebtors(it)
+            })
     }
 }
