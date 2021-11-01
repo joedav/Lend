@@ -8,8 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.joelysondavid.lend.databinding.FragmentOwingBinding
+import com.joelysondavid.lend.view.adapter.DebtorAdapter
 import com.joelysondavid.lend.viewmodel.OwingViewModel
+import kotlinx.android.synthetic.main.fragment_owing.*
+import kotlinx.android.synthetic.main.fragment_owing.view.*
 
 class OwingFragment : Fragment() {
 
@@ -31,10 +36,16 @@ class OwingFragment : Fragment() {
         _binding = FragmentOwingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textOwing
-        owingViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        // Recycler View
+        // 1 - Obter a recycler
+        val recycler: RecyclerView = binding.recyclerOwing
+
+        // 2 - Definir um Layout
+        recycler.layoutManager = LinearLayoutManager(root.context)
+
+        // 3 - Definir um adapter
+        recycler.adapter = DebtorAdapter()
+
         return root
     }
 
