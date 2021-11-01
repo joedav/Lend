@@ -50,9 +50,12 @@ class OwingFragment : Fragment() {
 
         observer()
 
-        owingViewModel.load()
-
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        owingViewModel.load()
     }
 
     override fun onDestroyView() {
