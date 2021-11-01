@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.joelysondavid.lend.R
 import com.joelysondavid.lend.databinding.FragmentOwingBinding
-import com.joelysondavid.lend.service.constants.DataBaseConstants
 import com.joelysondavid.lend.service.constants.LendConstants
 import com.joelysondavid.lend.view.adapter.DebtorAdapter
 import com.joelysondavid.lend.view.listener.DebtorListener
@@ -20,7 +19,7 @@ import com.joelysondavid.lend.viewmodel.OwingViewModel
 
 class OwingFragment : Fragment() {
 
-    private lateinit var owingViewModel: OwingViewModel
+    private lateinit var mOwingViewModel: OwingViewModel
     private var _binding: FragmentOwingBinding? = null
 
     private val mAdapter: DebtorAdapter = DebtorAdapter()
@@ -35,7 +34,7 @@ class OwingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        owingViewModel =
+        mOwingViewModel =
             ViewModelProvider(this).get(OwingViewModel::class.java)
 
         _binding = FragmentOwingBinding.inflate(inflater, container, false)
@@ -61,6 +60,11 @@ class OwingFragment : Fragment() {
 
                 startActivity(intent)
             }
+
+            override fun onDelete(id: Int) {
+                mOwingViewModel.delete(id)
+                mOwingViewModel.load()
+            }
         }
         mAdapter.attachListener(mListener)
 
@@ -71,7 +75,7 @@ class OwingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        owingViewModel.load()
+        mOwingViewModel.load()
     }
 
     override fun onDestroyView() {
@@ -80,7 +84,7 @@ class OwingFragment : Fragment() {
     }
 
     private fun observer() {
-        owingViewModel.debtorsList.observe(
+        mOwingViewModel.debtorsList.observe(
             viewLifecycleOwner,
             Observer {
                 mAdapter.updateDebtors(it)

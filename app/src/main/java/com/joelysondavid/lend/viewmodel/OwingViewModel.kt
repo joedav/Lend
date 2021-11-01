@@ -17,4 +17,8 @@ class OwingViewModel(application: Application) : AndroidViewModel(application) {
     fun load() {
         mDebtorsList.value = mLendRepository.getOwing()
     }
+
+    fun delete(id: Int) {
+        mLendRepository.delete(id)
+    }
 }

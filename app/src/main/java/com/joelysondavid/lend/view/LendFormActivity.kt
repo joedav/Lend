@@ -1,10 +1,12 @@
 package com.joelysondavid.lend.view
 
+import android.media.audiofx.LoudnessEnhancer
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -51,8 +53,11 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
                     name = name,
                     loanDate = date,
                     totalValue = totalValue.toDouble(),
-                    amountPaying = paying.toDouble()
+                    amountPaying = paying.toDoubleOrNull() ?: 0.0
                 )
+
+            if (text_remaining.isVisible) lend.remainingAmount =
+                text_remaining.text.toString().toDouble()
 
             lendFormViewModel.save(lend)
         }

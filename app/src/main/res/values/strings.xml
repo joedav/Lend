@@ -21,4 +21,9 @@
     <string name="loan">Resta</string>
     <string name="save">Salvar</string>
     <string name="to_pay">Pagar</string>
+    <string name="confirmation">Confirmação</string>
+    <string name="remove_debtor">Remoção de devedor!</string>
+    <string name="really_want_remove">Você tem certeza que deseja excluir este devedor?</string>
+    <string name="remove">Remover</string>
+    <string name="cancel">Cancelar</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.joelysondavid.lend.view.viewholder
 
+import android.app.AlertDialog
 import android.view.TextureView
 import android.view.View
 import android.widget.TextView
@@ -17,6 +18,18 @@ class DebtorViewHolder(itemView: View, private val listener: DebtorListener) :
 
         textName.setOnClickListener {
             listener.onClick(lendModel.id)
+        }
+
+        textName.setOnLongClickListener {
+            AlertDialog.Builder(itemView.context)
+                .setTitle(itemView.context.getString(R.string.remove_debtor))
+                .setMessage(itemView.context.getString(R.string.really_want_remove))
+                .setPositiveButton(R.string.remove) { dialog, which ->
+                    listener.onDelete(lendModel.id)
+                }
+                .setNeutralButton(itemView.context.getString(R.string.cancel), null)
+                .show()
+            true
         }
     }
 
