@@ -1,13 +1,16 @@
 package com.joelysondavid.lend.view
 
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.joelysondavid.lend.R
 import com.joelysondavid.lend.databinding.ActivityLendFormBinding
+import com.joelysondavid.lend.service.constants.LendConstants
 import com.joelysondavid.lend.service.model.LendModel
 import com.joelysondavid.lend.viewmodel.LendFormViewModel
 import kotlinx.android.synthetic.main.activity_lend_form.*
@@ -25,9 +28,11 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_lend_form)
         lendFormViewModel = ViewModelProvider(this).get(LendFormViewModel::class.java)
 
+        loadData()
         setListeners()
         observe()
-        hideEditFields(false)
+
+
     }
 
     override fun onClick(view: View) {
@@ -38,22 +43,22 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
             val date = edit_owing_date.text.toString()
             val totalValue = edit_total_value.text.toString()
 
-            val dateFormatted = SimpleDateFormat("dd/MM/yyyy").parse(date)
-
             val lend =
                 LendModel(
                     name = name,
-                    loanDate = dateFormatted.toString(),
+                    loanDate = date,
                     totalValue = totalValue.toDouble()
                 )
 
             lendFormViewModel.save(lend)
         }
-        hideEditFields(true)
     }
 
     private fun setListeners() {
         btn_save.setOnClickListener(this)
+
+        val dateMask:DateMask = DateMask()
+        edit_owing_date.addTextChangedListener(dateMask)
     }
 
     private fun observe() {
@@ -65,6 +70,17 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(applicationContext, "Falha!", Toast.LENGTH_SHORT).show()
             }
         })
+
+        lendFormViewModel.lend.observe(this, Observer {
+            edit_owing_name.setText(it.name)
+            edit_owing_date.setText(it.loanDate)
+            edit_total_value.setText(it.totalValue.toString())
+            text_remaining.text = it.remainingAmount.toString()
+
+            hideEditFields(it.id != 0)
+        })
+
+
     }
 
     private fun hideEditFields(isEdit: Boolean) {
@@ -73,11 +89,20 @@ class LendFormActivity : AppCompatActivity(), View.OnClickListener {
             text_loan.visibility = View.VISIBLE
             text_payment_amount.visibility = View.VISIBLE
             edit_payment_amount.visibility = View.VISIBLE
+            btn_save.text = getString(R.string.to_pay)
         } else {
             text_remaining.visibility = View.GONE
             text_loan.visibility = View.GONE
-            text_payment_amount.visibility = View.INVISIBLE
-            edit_payment_amount.visibility = View.INVISIBLE
+            text_payment_amount.visibility = View.GONE
+            edit_payment_amount.visibility = View.GONE
+        }
+    }
+
+    private fun loadData() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            val id = bundle.getInt(LendConstants.DEBTORID)
+            lendFormViewModel.load(id)
         }
     }
 

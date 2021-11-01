@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/loan"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/text_payment_amount"
         app:layout_constraintTop_toTopOf="@id/text_payment_amount" />
@@ -89,6 +90,7 @@
         android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/edit_payment_amount"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/text_payment_amount"
@@ -101,6 +103,7 @@
         android:layout_marginTop="40dp"
         android:layout_weight="1"
         android:text="@string/payment_value"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="@+id/text_total_amount"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_total_value" />
@@ -110,6 +113,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="@id/edit_total_value"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_payment_amount" />

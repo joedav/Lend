@@ -1,19 +1,13 @@
 package com.joelysondavid.lend.service.repository
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import androidx.core.database.getDoubleOrNull
 import androidx.core.database.getIntOrNull
 import androidx.core.database.getStringOrNull
-import com.joelysondavid.lend.service.DataBaseConstants
+import com.joelysondavid.lend.service.constants.DataBaseConstants
 import com.joelysondavid.lend.service.model.LendModel
-import com.joelysondavid.lend.utils.dateToString
-import com.joelysondavid.lend.utils.stringToDate
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class LendRepository private constructor(context: Context) {

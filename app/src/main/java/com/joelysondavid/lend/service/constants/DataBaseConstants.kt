@@ -1,4 +1,4 @@
-package com.joelysondavid.lend.service
+package com.joelysondavid.lend.service.constants
 
 class DataBaseConstants {
     /**

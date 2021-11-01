@@ -12,11 +12,19 @@ class LendFormViewModel(application: Application) : AndroidViewModel(application
 
     private val mLendRepository: LendRepository =
         LendRepository.getInstance(application.applicationContext)
+
     private var mSaveLoan = MutableLiveData<Boolean>()
     val saveLoan: LiveData<Boolean> = mSaveLoan
 
+    private var mLend = MutableLiveData<LendModel>()
+    val lend: LiveData<LendModel> = mLend
+
     fun save(lend: LendModel) {
         mSaveLoan.value = mLendRepository.save(lend)
+    }
+
+    fun load(id: Int) {
+        mLend.value = mLendRepository.getById(id)
     }
 
 }

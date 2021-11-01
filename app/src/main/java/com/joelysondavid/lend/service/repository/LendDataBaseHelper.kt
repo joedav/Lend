@@ -3,7 +3,7 @@ package com.joelysondavid.lend.service.repository
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.joelysondavid.lend.service.DataBaseConstants
+import com.joelysondavid.lend.service.constants.DataBaseConstants
 
 class LendDataBaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
