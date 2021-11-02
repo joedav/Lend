@@ -15,11 +15,11 @@ import com.joelysondavid.lend.databinding.FragmentOwingBinding
 import com.joelysondavid.lend.service.constants.LendConstants
 import com.joelysondavid.lend.view.adapter.DebtorAdapter
 import com.joelysondavid.lend.view.listener.DebtorListener
-import com.joelysondavid.lend.viewmodel.OwingViewModel
+import com.joelysondavid.lend.viewmodel.LendViewModel
 
 class OwingFragment : Fragment() {
 
-    private lateinit var mOwingViewModel: OwingViewModel
+    private lateinit var mLendViewModel: LendViewModel
     private var _binding: FragmentOwingBinding? = null
 
     private val mAdapter: DebtorAdapter = DebtorAdapter()
@@ -34,8 +34,8 @@ class OwingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mOwingViewModel =
-            ViewModelProvider(this).get(OwingViewModel::class.java)
+        mLendViewModel =
+            ViewModelProvider(this).get(LendViewModel::class.java)
 
         _binding = FragmentOwingBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -62,8 +62,8 @@ class OwingFragment : Fragment() {
             }
 
             override fun onDelete(id: Int) {
-                mOwingViewModel.delete(id)
-                mOwingViewModel.load()
+                mLendViewModel.delete(id)
+                mLendViewModel.load(LendConstants.FILTER.DEBTORS)
             }
         }
         mAdapter.attachListener(mListener)
@@ -75,7 +75,7 @@ class OwingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        mOwingViewModel.load()
+        mLendViewModel.load(LendConstants.FILTER.DEBTORS)
     }
 
     override fun onDestroyView() {
@@ -84,7 +84,7 @@ class OwingFragment : Fragment() {
     }
 
     private fun observer() {
-        mOwingViewModel.debtorsList.observe(
+        mLendViewModel.debtorsList.observe(
             viewLifecycleOwner,
             Observer {
                 mAdapter.updateDebtors(it)

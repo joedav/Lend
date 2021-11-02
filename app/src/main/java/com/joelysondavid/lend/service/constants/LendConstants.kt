@@ -5,4 +5,10 @@ class LendConstants private constructor() {
         const val DEBTORID = "debtorID"
         const val DEBTOREXTRA = "debtorExtra"
     }
+
+    object FILTER{
+        const val DEBTORS = 0
+        const val PAIDS = 1
+        const val ALL = 2
+    }
 }

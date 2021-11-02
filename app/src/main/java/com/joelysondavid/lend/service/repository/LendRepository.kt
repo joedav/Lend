@@ -203,7 +203,7 @@ class LendRepository private constructor(context: Context) {
                     "${DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID}," +
                     "${DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT}," +
                     "${DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT} " +
-                    "WHERE ${DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT} = ${DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID}"
+                    "WHERE ${DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT} >= ${DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT}"
 
             val cursor: Cursor =
                 db.rawQuery(select, null)

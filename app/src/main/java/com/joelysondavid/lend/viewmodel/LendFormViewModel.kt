@@ -33,7 +33,7 @@ class LendFormViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun toPay(lend: LendModel): LendModel {
-        if (lend.amountPaying != .0) {
+        if (lend.amountPaying != .0&&lend.amountPaying<=lend.remainingAmount) {
             lend.remainingAmount = lend.remainingAmount - lend.amountPaying
         }
 
