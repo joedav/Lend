@@ -148,7 +148,7 @@ class LendRepository private constructor(context: Context) {
                     "${DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID}, " +
                     "${DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT} " +
                     "FROM ${DataBaseConstants.GUEST.TABLE_NAME} " +
-                    "WHERE ${DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT} > ${DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID};"
+                    "WHERE ${DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT} > ${DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT};"
 
             val cursor: Cursor = db.rawQuery(select, null)
 
@@ -198,17 +198,20 @@ class LendRepository private constructor(context: Context) {
             val db = mLendDataBaseHelper.readableDatabase
 
             val select = "SELECT ${DataBaseConstants.GUEST.COLUMNS.ID}," +
+                    "${DataBaseConstants.GUEST.COLUMNS.DEBTOR_NAME}," +
                     "${DataBaseConstants.GUEST.COLUMNS.LOAN_DATE}," +
                     "${DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT}," +
                     "${DataBaseConstants.GUEST.COLUMNS.AMOUNT_PAID}," +
                     "${DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT}," +
                     "${DataBaseConstants.GUEST.COLUMNS.LAST_PAYMENT} " +
+                    "FROM ${DataBaseConstants.GUEST.TABLE_NAME} " +
                     "WHERE ${DataBaseConstants.GUEST.COLUMNS.REMAINING_AMOUNT} >= ${DataBaseConstants.GUEST.COLUMNS.LOAN_AMOUNT}"
 
             val cursor: Cursor =
                 db.rawQuery(select, null)
 
-            if (cursor.moveToNext()) {
+            while(cursor.moveToNext()){
+                if (cursor.count>0) {
                 val debtorId =
                     cursor.getIntOrNull(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.ID))
                 val debtorName =
@@ -235,6 +238,7 @@ class LendRepository private constructor(context: Context) {
                 )
 
                 list.add(lend)
+                }
             }
             cursor.close()
             list
